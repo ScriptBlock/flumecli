@@ -29,8 +29,10 @@ def checkparams():
 
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument("--auth", help="Obtain authentication token", action="store_true")
+    action_group.add_argument("--renew", help="Renew auth token", action="store_true")
     action_group.add_argument("--details", help="Get important metadata about your Flume account", action="store_true")
     action_group.add_argument("--query", help="Query water usage for last minute", action="store_true")
+
     
 
     args = parser.parse_args()
@@ -51,6 +53,7 @@ def checkparams():
     if args.auth: config["mode"] = "auth"
     if args.details: config["mode"] = "details"
     if args.query: config["mode"] = "query"
+    if args.renew: config["mode"] = "renew"
     
     return config
 
@@ -83,6 +86,18 @@ def obtainCredentials(config):
                 f.close()
         else:
             quit("failed to obtain creds")    
+
+
+def renewCredentials(config):
+    url = "https://api.flumetech.com/oauth/token"
+    payload = '{"grant_type":refresh_token", "refresh_token":"' + config["refresh_token"] + '", "client_id":"' + config["client_id"] + '", "client_secret":"' + config["client_secret"] + '"}'
+    headers = {'content-type': 'application/json'}    
+    resp = requests.request("POST", url, data=payload, headers=headers)
+    dataJSON = json.loads(resp.text)
+    print(dataJSON)
+
+
+
 
 def loadCredentials(config):
     if not config["tokenfile"]: 
@@ -186,6 +201,10 @@ def main():
 
     if config["mode"] == "auth":
         obtainCredentials(config)
+
+    if config["mode"] == "renew":
+        loadCredentials(config)
+        renewCredentials(config)
 
     if config["mode"] == "details":
         loadCredentials(config)
