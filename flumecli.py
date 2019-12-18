@@ -193,6 +193,7 @@ def main():
         getDevices(config)
         print("-------------------------------------------")
         print("Access Token: " + config["access_token"])
+        print("Refresh Token: " + config["refresh_token"])
         print("User ID: " + str(config["user_id"]))
         print("Device ID: " + config["device_id"])
 
