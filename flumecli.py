@@ -90,7 +90,8 @@ def obtainCredentials(config):
 
 def renewCredentials(config):
     url = "https://api.flumetech.com/oauth/token"
-    payload = '{"grant_type":refresh_token", "refresh_token":"' + config["refresh_token"] + '", "client_id":"' + config["client_id"] + '", "client_secret":"' + config["client_secret"] + '"}'
+    payload = '{"grant_type":"refresh_token", "refresh_token":"' + config["refresh_token"] + '", "client_id":"' + config["clientid"] + '", "client_secret":"' + config["clientsecret"] + '"}'
+    print(payload)
     headers = {'content-type': 'application/json'}    
     resp = requests.request("POST", url, data=payload, headers=headers)
     dataJSON = json.loads(resp.text)
