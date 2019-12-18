@@ -2,6 +2,11 @@
 
 *This script is currently written to explictly log data for just the last 1 minute assuming that your cron/scheduler is the throttle for data fidelity.  There's lots of options available from flume.  Feel free to make this code more robust/configurable*
 
+## Dependencies
+* python3
+* pyjwt library
+* requests library
+
 ## What you will need
 * Your API client ID and secret.  You have to get this through the flumetech portal: https://portal.flumetech.com/#dashboard
 * Your username and password for the portal.  
